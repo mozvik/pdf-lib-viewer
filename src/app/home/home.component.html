@@ -1,0 +1,36 @@
+<div class="download">
+  @for (item of files; track $index) {
+  <button (click)="downloadPDF(item)">
+    Preview <strong>{{ item }}</strong> template
+  </button>
+  }
+</div>
+<br />
+<div>
+  <div>[src]: ArrayBuffer | Blob | Uint8Array | URL</div>
+  <div>[base64Src]: Base64 encoded strings as string</div>
+
+  <!-- [base64Src]="base64" -->
+  <ngx-extended-pdf-viewer
+    [src]="blob"
+    [height]="'50vh'"
+    (formDataChange)="onChange($event)"
+    (pagesLoaded)="onPagesLoaded()"
+  ></ngx-extended-pdf-viewer>
+</div>
+<br />
+<div class="pdf-info">
+  <button (click)="export()">Save PDF to local device</button>
+  <button (click)="export()">Save and upload PDF</button>
+</div>
+@if(savedBlobSize){
+<div>
+  <i>Saved Blob size: {{ savedBlobSize }}</i>
+</div>
+}
+<hr />
+<strong>FormData:</strong>
+<div>{{ formData | json }}</div>
+<hr />
+<strong>Fileinfo:</strong>
+<div>{{ fileInfo | json }}</div>
