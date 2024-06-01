@@ -1,3 +1,8 @@
+<h1>
+  <a href="https://pdfviewer.net/extended-pdf-viewer/simple" target="_blank"
+    >Extended PDF Viewer</a
+  >
+</h1>
 <div class="download">
   @for (item of files; track $index) {
   <button (click)="downloadPDF(item)">
@@ -9,19 +14,38 @@
 <div>
   <div>[src]: ArrayBuffer | Blob | Uint8Array | URL</div>
   <div>[base64Src]: Base64 encoded strings as string</div>
-
+  <button (click)="showToolbar = !showToolbar">Toggle toolbar</button>
+  <button (click)="showToolbarButton = !showToolbarButton">
+    Toggle right menu button in toolbar
+  </button>
+  <button (click)="showSidebarButton = !showSidebarButton">
+    Toggle sidebar menu button on the left
+  </button>
+  <button (click)="showPagination = !showPagination">
+    Toggle pagination on the left
+  </button>
+  <button (click)="customCSS = !customCSS">
+    Toggle custom CSS styles
+  </button>
   <!-- [base64Src]="base64" -->
-  <ngx-extended-pdf-viewer
-    [src]="blob"
-    [height]="'50vh'"
-    (formDataChange)="onChange($event)"
-    (pagesLoaded)="onPagesLoaded()"
-  ></ngx-extended-pdf-viewer>
+  <div [ngClass]="{ custom: customCSS }">
+    <ngx-extended-pdf-viewer
+      #pdfViewer
+      [src]="blob"
+      [height]="'50vh'"
+      (formDataChange)="onChange($event)"
+      (pagesLoaded)="onPagesLoaded()"
+      [showToolbar]="showToolbar"
+      [showSecondaryToolbarButton]="showToolbarButton"
+      [showSidebarButton]="showSidebarButton"
+      [showPagingButtons]="showPagination"
+      (progress)="onProgress($event)"
+    ></ngx-extended-pdf-viewer>
+  </div>
 </div>
 <br />
 <div class="pdf-info">
   <button (click)="export()">Save PDF to local device</button>
-  <button (click)="export()">Save and upload PDF</button>
 </div>
 @if(savedBlobSize){
 <div>

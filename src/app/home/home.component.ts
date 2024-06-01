@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import {
   FormDataType,
+  NgxExtendedPdfViewerComponent,
   NgxExtendedPdfViewerModule,
   NgxExtendedPdfViewerService,
   PdfDocumentInfo,
   PdfDocumentPropertiesExtractor,
+  ProgressBarEvent,
 } from 'ngx-extended-pdf-viewer';
 
 @Component({
@@ -15,7 +17,10 @@ import {
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements AfterViewInit {
+  @ViewChild('pdfViewer', { static: true }) pdfViewer:
+    | NgxExtendedPdfViewerComponent
+    | undefined;
   files: string[] = [
     'assets/autofin.pdf',
     'assets/editable.pdf',
@@ -29,8 +34,23 @@ export class HomeComponent {
   uint8Array!: Uint8Array;
   base64!: string;
   savedBlobSize!: number;
+  showToolbar = false;
+  showToolbarButton = true;
+  showSidebarButton = true;
+  showPagination = true;
+  customCSS = false;
 
   constructor(private pdfViewerService: NgxExtendedPdfViewerService) {}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      if (this.pdfViewer) {
+        console.log('pdfViewer component instance:', this.pdfViewer);
+      } else {
+        console.log('pdfViewer is undefined');
+      }
+    }, 0);
+  }
 
   async downloadPDF(url: string) {
     this.formData = undefined;
@@ -87,5 +107,9 @@ export class HomeComponent {
     new PdfDocumentPropertiesExtractor()
       .getDocumentProperties()
       .then((info) => (this.fileInfo = info));
+  }
+
+  onProgress(progress: ProgressBarEvent) {
+    console.log('progress:', progress);
   }
 }

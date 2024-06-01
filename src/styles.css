@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+
+.custom ngx-extended-pdf-viewer #toolbarViewer {
+  background-color: teal !important;
+  color: white !important;
+}
+
+.custom ngx-extended-pdf-viewer #viewerContainer {
+  background-color: lightslategray !important;
+}
+
+.custom ngx-extended-pdf-viewer button {
+  color: whitesmoke !important;
+}
