@@ -79,9 +79,6 @@ export class HomeComponent implements AfterViewInit {
   }
 
   public async export(): Promise<void> {
-    if (!this.arrayBuffer) {
-      return;
-    }
     this.pdfViewerService
       .getCurrentDocumentAsBlob()
       .then((blob) => {
